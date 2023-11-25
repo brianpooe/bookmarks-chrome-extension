@@ -6,6 +6,8 @@
   "action": {
     "default_popup": "index.html"
   },
-  "permissions": ["bookmarks"],
+  "permissions": [
+    "bookmarks"
+  ],
   "author": "Brian Pooe"
 }
