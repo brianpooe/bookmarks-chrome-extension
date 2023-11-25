@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Bookmarks editor",
+  "description": "Edit your existing bookmarks and create new ones",
+  "version": "1.0",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["bookmarks"],
+  "author": "Brian Pooe"
+}
