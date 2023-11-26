@@ -22,33 +22,46 @@ import BookmarkTreeNode = chrome.bookmarks.BookmarkTreeNode;
                               <a [href]="item.url" target="_blank">{{ item.title }}</a>
                           </p>
                       } @else {
-                          <p class="editor">
-                              <input [(ngModel)]="editedItemTitle"
-                                     [value]="item.title"
-                                     type="text"
-                                     name="edit" id="edit">
-                              <button type="button" (click)="update(item)">update</button>
+                          <p class="input-group">
+                              <input [(ngModel)]="editedItemTitle" type="text" class="form-control">
+                              <button type="button" class="btn btn-primary" (click)="update(item)">Update</button>
                           </p>
                       }
-                      <svg
-                              (click)="toggleEditor(item)"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                      >
-                          <path
-                                  fill-rule="evenodd"
-                                  clip-rule="evenodd"
-                                  d="M21.2635 2.29289C20.873 1.90237 20.2398 1.90237 19.8493 2.29289L18.9769 3.16525C17.8618 2.63254 16.4857 2.82801 15.5621 3.75165L4.95549 14.3582L10.6123 20.0151L21.2189 9.4085C22.1426 8.48486 22.338 7.1088 21.8053 5.99367L22.6777 5.12132C23.0682 4.7308 23.0682 4.09763 22.6777 3.70711L21.2635 2.29289ZM16.9955 10.8035L10.6123 17.1867L7.78392 14.3582L14.1671 7.9751L16.9955 10.8035ZM18.8138 8.98525L19.8047 7.99429C20.1953 7.60376 20.1953 6.9706 19.8047 6.58007L18.3905 5.16586C18 4.77534 17.3668 4.77534 16.9763 5.16586L15.9853 6.15683L18.8138 8.98525Z"
-                                  fill="currentColor"
-                          />
-                          <path
-                                  d="M2 22.9502L4.12171 15.1717L9.77817 20.8289L2 22.9502Z"
-                                  fill="currentColor"
-                          />
-                      </svg>
+                      @if (!item.isEditable) {
+                          <svg
+                                  (click)="toggleEditor(item)"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                          >
+                              <path
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M21.2635 2.29289C20.873 1.90237 20.2398 1.90237 19.8493 2.29289L18.9769 3.16525C17.8618 2.63254 16.4857 2.82801 15.5621 3.75165L4.95549 14.3582L10.6123 20.0151L21.2189 9.4085C22.1426 8.48486 22.338 7.1088 21.8053 5.99367L22.6777 5.12132C23.0682 4.7308 23.0682 4.09763 22.6777 3.70711L21.2635 2.29289ZM16.9955 10.8035L10.6123 17.1867L7.78392 14.3582L14.1671 7.9751L16.9955 10.8035ZM18.8138 8.98525L19.8047 7.99429C20.1953 7.60376 20.1953 6.9706 19.8047 6.58007L18.3905 5.16586C18 4.77534 17.3668 4.77534 16.9763 5.16586L15.9853 6.15683L18.8138 8.98525Z"
+                                      fill="currentColor"
+                              />
+                              <path
+                                      d="M2 22.9502L4.12171 15.1717L9.77817 20.8289L2 22.9502Z"
+                                      fill="currentColor"
+                              />
+                          </svg>
+                      } @else {
+                          <svg
+                                  (click)="toggleEditor(item)"
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                          >
+                              <path
+                                      d="M6.2253 4.81108C5.83477 4.42056 5.20161 4.42056 4.81108 4.81108C4.42056 5.20161 4.42056 5.83477 4.81108 6.2253L10.5858 12L4.81114 17.7747C4.42062 18.1652 4.42062 18.7984 4.81114 19.1889C5.20167 19.5794 5.83483 19.5794 6.22535 19.1889L12 13.4142L17.7747 19.1889C18.1652 19.5794 18.7984 19.5794 19.1889 19.1889C19.5794 18.7984 19.5794 18.1652 19.1889 17.7747L13.4142 12L19.189 6.2253C19.5795 5.83477 19.5795 5.20161 19.189 4.81108C18.7985 4.42056 18.1653 4.42056 17.7748 4.81108L12 10.5858L6.2253 4.81108Z"
+                                      fill="currentColor"
+                              />
+                          </svg>
+                      }
                       <svg
                               (click)="delete(item)"
                               width="24"
@@ -107,8 +120,30 @@ import BookmarkTreeNode = chrome.bookmarks.BookmarkTreeNode;
               padding: 0 1.5em;
             }
 
-            .editor {
-              padding: 0 1.5em;
+            input-group {
+              width: 100%;
+              display: flex;
+              align-items: center;
+            }
+
+            .form-control {
+              flex: 1;
+              padding: 10px;
+              border: 1px solid #ccc;
+              border-radius: 4px 0 0 4px;
+              width: 80%;
+            }
+
+            .btn {
+              padding: 11px 15px;
+              border: none;
+              border-radius: 0 4px 4px 0;
+              cursor: pointer;
+            }
+
+            .btn-primary {
+              background-color: #007bff;
+              color: #fff;
             }
           }
         }
@@ -122,16 +157,15 @@ export class AppComponent implements OnInit {
   editedItemTitle: string;
 
   ngOnInit(): void {
-    (async () => {
-      const tree: BookmarkTreeNode[] = await chrome.bookmarks?.getTree();
-      this.bookmarks = this.extractAllChildren(tree);
-    })();
+    (async (): Promise<BookmarkTreeNode[]> => this.bookmarks = await this.extractAllChildren())();
   }
 
-  extractAllChildren(data: BookmarkTreeNode[]): BookmarkNode[] {
+  async extractAllChildren(): Promise<BookmarkNode[]> {
+    const tree: BookmarkTreeNode[] = await chrome.bookmarks?.getTree();
+
     let extractedData: BookmarkNode[] = [];
     // Create a stack to keep track of nodes to be processed
-    let stack: BookmarkTreeNode[][] = [data];
+    let stack: BookmarkTreeNode[][] = [tree];
 
     // Process nodes until the stack is empty
     while (stack.length > 0) {
@@ -169,14 +203,14 @@ export class AppComponent implements OnInit {
 
   async delete(item: BookmarkNode) {
     await chrome.bookmarks.remove(item.id);
-    location.reload();
+    this.bookmarks = await this.extractAllChildren();
   }
 
   async update(item: BookmarkNode) {
     await chrome.bookmarks.update(item.id, {
       title: this.editedItemTitle,
     });
-    location.reload();
+    this.bookmarks = await this.extractAllChildren();
   }
 
   toggleEditor(item: BookmarkNode) {
